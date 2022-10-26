@@ -3,6 +3,7 @@ from datasets import GeneratorBasedBuilder, BuilderConfig, Version, DatasetInfo,
 import os
 import json
 import textwrap
+from sklearn.model_selection import train_test_split
 
 
 _CITATION = """"""
@@ -206,12 +207,14 @@ class Hulu(GeneratorBasedBuilder):
     def _ws(base_path, name, split_key):
         with open(os.path.join(base_path, _PATHS[name][split_key]), mode="r", encoding="utf8") as f:
             content = json.load(f)
+            train, test = train_test_split(content, train_size=0.8, random_state=0)
+            train, validation = train_test_split(train, train_size=int(len(content) * 0.7), random_state=0)
             if split_key == "train":
-                content = content[:int(len(content)*0.7)]
+                content = train
             elif split_key == "validation":
-                content = content[int(len(content)*0.7):int(len(content)*0.8)]
+                content = validation
             elif split_key == "test":
-                content = content[int(len(content)*0.8):]
+                content = test
 
         for i, row in enumerate(content):
             label = 0 if row['Answer1'] == row['CorrectAnswer'] else 1
