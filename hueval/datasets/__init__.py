@@ -5,6 +5,7 @@ from typing import List
 from .nerkor import _SUBS as NERKOR_SUBS
 from .nerkor import NerKor
 from .nerkor_extended import NerKorExtended
+from .opinhubank import OpinHuBank
 
 Dataset = namedtuple("Dataset", ['dataset', 'metric'])
 _metric = {
@@ -18,6 +19,9 @@ _metric = {
     },
     "nytk-nerkor": {x: ["seqeval"] for x in NERKOR_SUBS},
     "nerkor_1.41e": {x: ["seqeval"] for x in NERKOR_SUBS},
+    "opinhubank": {
+        "opinhubank": ["accuracy"]
+    },
 }
 
 
@@ -53,6 +57,11 @@ def load_dataset(name: str, config: str) -> Dataset:
         return Dataset(dataset=dataset, metric=load(*_metric[name][config]))
     elif name == "nerkor_1.41e":
         builder = NerKorExtended(config_name=config)
+        dataset = builder.download_and_prepare()
+        dataset = builder.as_dataset()
+        return Dataset(dataset=dataset, metric=load(*_metric[name][config]))
+    elif name == "opinhubank":
+        builder = OpinHuBank(config_name=config)
         dataset = builder.download_and_prepare()
         dataset = builder.as_dataset()
         return Dataset(dataset=dataset, metric=load(*_metric[name][config]))

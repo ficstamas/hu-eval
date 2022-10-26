@@ -1,4 +1,3 @@
-import requests
 import os
 from typing import Optional, List, Literal
 import tqdm
@@ -43,7 +42,7 @@ def download_url(url: str,
             else:
                 resp = requests.post(url, data=request_params, stream=True, verify=verify_ssl)
             if resp.status_code != 200:
-                raise RuntimeError(f'Failed downloading url {url}')
+                raise RuntimeError(f'Failed to download content from url: {url}')
 
             total_size = int(resp.headers.get('content-length', 0))
             chunk_size = 1024

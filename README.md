@@ -44,3 +44,4 @@ rc_dataset = load_dataset("hulu", "rc")
 | hulu         | cola, copa, sst2, rc, wnli, ws       | [link](https://github.com/nytud/HuLU)                           |
 | nytk-nerkor  | fiction, legal, news, web, wikipedia | [link](https://github.com/nytud/NYTK-NerKor)                    |
 | nerkor_1.41e | fiction, legal, news, web, wikipedia | [link](https://github.com/novakat/NYTK-NerKor-Cars-OntoNotesPP) | 
+| opinhubank   | opinhubank                           | [link](https://sites.google.com/site/mmihaltz/resources)        | 
