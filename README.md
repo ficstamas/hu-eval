@@ -39,7 +39,8 @@ rc_dataset = load_dataset("hulu", "rc")
 
 # Supported Datasets
 
-| Names       | Available Configurations             |
-|-------------|--------------------------------------|
-| hulu        | cola, copa, sst2, rc, wnli, ws       |
-| nytk-nerkor | fiction, legal, news, web, wikipedia | 
+| Names        | Available Configurations             | Sources                                                         |
+|--------------|--------------------------------------|-----------------------------------------------------------------|
+| hulu         | cola, copa, sst2, rc, wnli, ws       | [link](https://github.com/nytud/HuLU)                           |
+| nytk-nerkor  | fiction, legal, news, web, wikipedia | [link](https://github.com/nytud/NYTK-NerKor)                    |
+| nerkor_1.41e | fiction, legal, news, web, wikipedia | [link](https://github.com/novakat/NYTK-NerKor-Cars-OntoNotesPP) | 

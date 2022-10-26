@@ -4,6 +4,7 @@ from evaluate import load
 from typing import List
 from .nerkor import _SUBS as NERKOR_SUBS
 from .nerkor import NerKor
+from .nerkor_extended import NerKorExtended
 
 Dataset = namedtuple("Dataset", ['dataset', 'metric'])
 _metric = {
@@ -16,6 +17,7 @@ _metric = {
         "ws": ["super_glue", "wsc"],
     },
     "nytk-nerkor": {x: ["seqeval"] for x in NERKOR_SUBS},
+    "nerkor_1.41e": {x: ["seqeval"] for x in NERKOR_SUBS},
 }
 
 
@@ -46,6 +48,11 @@ def load_dataset(name: str, config: str) -> Dataset:
         return Dataset(dataset=dataset, metric=load(*_metric[name][config]))
     elif name == "nytk-nerkor":
         builder = NerKor(config_name=config)
+        dataset = builder.download_and_prepare()
+        dataset = builder.as_dataset()
+        return Dataset(dataset=dataset, metric=load(*_metric[name][config]))
+    elif name == "nerkor_1.41e":
+        builder = NerKorExtended(config_name=config)
         dataset = builder.download_and_prepare()
         dataset = builder.as_dataset()
         return Dataset(dataset=dataset, metric=load(*_metric[name][config]))

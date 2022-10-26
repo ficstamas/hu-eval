@@ -62,7 +62,7 @@ def get_repo_url(x):
     return "/".join(x.split("/")[:5])
 
 
-class HuluConfig(BuilderConfig):
+class NerKorConfig(BuilderConfig):
     """BuilderConfig for Hulu."""
 
     def __init__(
@@ -73,7 +73,7 @@ class HuluConfig(BuilderConfig):
             url,
             **kwargs,
     ):
-        super(HuluConfig, self).__init__(version=Version("1.0.0", ""), **kwargs)
+        super(NerKorConfig, self).__init__(version=Version("1.0.0", ""), **kwargs)
         self.text_features = text_features
         self.data_url = data_url
         self.data_dir = data_dir
@@ -84,7 +84,7 @@ class NerKor(GeneratorBasedBuilder):
     """NerKor datasets."""
     # FORM LEMMA UPOS XPOS FEATS CONLL:NER
     BUILDER_CONFIGS = [
-        HuluConfig(
+        NerKorConfig(
             name=name,
             description=textwrap.dedent(""""""),
             text_features=["form", "lemma", "upos", "xpos", "feats", "ner"],
