@@ -2,7 +2,8 @@ from .hulu import Hulu
 from collections import namedtuple
 from evaluate import load
 from typing import List
-
+from .nerkor import _SUBS as NERKOR_SUBS
+from .nerkor import NerKor
 
 Dataset = namedtuple("Dataset", ['dataset', 'metric'])
 _metric = {
@@ -13,7 +14,8 @@ _metric = {
         "rc": ["super_glue", "record"],
         "copa": ["super_glue", "copa"],
         "ws": ["super_glue", "wsc"],
-    }
+    },
+    "nytk-nerkor": {x: ["seqeval"] for x in NERKOR_SUBS},
 }
 
 
@@ -39,6 +41,11 @@ def load_dataset(name: str, config: str) -> Dataset:
     """
     if name == "hulu":
         builder = Hulu(config_name=config)
+        dataset = builder.download_and_prepare()
+        dataset = builder.as_dataset()
+        return Dataset(dataset=dataset, metric=load(*_metric[name][config]))
+    elif name == "nytk-nerkor":
+        builder = NerKor(config_name=config)
         dataset = builder.download_and_prepare()
         dataset = builder.as_dataset()
         return Dataset(dataset=dataset, metric=load(*_metric[name][config]))

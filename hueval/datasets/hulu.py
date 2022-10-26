@@ -2,6 +2,10 @@ from datasets import GeneratorBasedBuilder, BuilderConfig, Version, DatasetInfo,
     Sequence, ClassLabel, DownloadManager, SplitGenerator, Split
 import os
 import json
+import textwrap
+
+
+_CITATION = """"""
 
 
 _SOURCES = {
@@ -61,7 +65,7 @@ class Hulu(GeneratorBasedBuilder):
     BUILDER_CONFIGS = [
         HuluConfig(
             name="cola",
-            description="",
+            description=textwrap.dedent(""""""),
             text_features={"sentence": "sentence"},
             label_classes=["unacceptable", "acceptable"],
             label_column="Label",
@@ -84,7 +88,7 @@ class Hulu(GeneratorBasedBuilder):
         ),
         HuluConfig(
             name="wnli",
-            description="",
+            description=textwrap.dedent(""""""),
             text_features={"sentence1": "sentence1",
                            "sentence2": "sentence2"},
             label_classes=["not_entailment", "entailment"],
@@ -95,7 +99,7 @@ class Hulu(GeneratorBasedBuilder):
         ),
         HuluConfig(
             name="rc",
-            description="",
+            description=textwrap.dedent(""""""),
             text_features={"lead": "lead", "passage": "passage", "query": "query"},
             label_classes=["mask"],
             label_column="answer",
@@ -105,7 +109,7 @@ class Hulu(GeneratorBasedBuilder):
         ),
         HuluConfig(
             name="ws",
-            description="",
+            description=textwrap.dedent(""""""),
             text_features={"sentence": "sentence",
                            "choice1": "choice1",
                            "choice2": "choice2",
@@ -118,7 +122,7 @@ class Hulu(GeneratorBasedBuilder):
         ),
         HuluConfig(
             name="sst2",
-            description="",
+            description=textwrap.dedent(""""""),
             text_features={"sentence": "sentence"},
             label_classes=["negative", "neutral", "positive"],
             label_column="label",
@@ -149,7 +153,7 @@ class Hulu(GeneratorBasedBuilder):
             description=self.config.description,
             features=Features(features),
             homepage=self.config.url,
-            citation="",
+            citation=textwrap.dedent(_CITATION),
         )
 
     def _split_generators(self, dl_manager: DownloadManager):
