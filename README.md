@@ -13,7 +13,17 @@ Specified version:
 pip install git+https://github.com/ficstamas/hu-eval.git@v0.1.0
 ```
 
-# Usage
+# Loading the Hubert Wiki models
+
+```python
+from transformers import BertForSequenceClassification
+from hueval.models.hubert import load_hubert
+
+
+model = load_hubert("cased", BertForSequenceClassification)
+```
+
+# Dataset Usage
 
 ```python
 from hueval.datasets import load_dataset
