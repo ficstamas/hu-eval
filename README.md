@@ -13,15 +13,28 @@ Specified version:
 pip install git+https://github.com/ficstamas/hu-eval.git@v0.1.0
 ```
 
-# Loading the Hubert Wiki models
+# Hubert Wiki
 
+Loading the model:
 ```python
 from transformers import BertForSequenceClassification
 from hueval.models.hubert import load_hubert
 
 
-model = load_hubert("cased", BertForSequenceClassification)
+model = load_hubert("uncased", BertForSequenceClassification)  # or "cased"
 ```
+Loading the corresponding tokenizer:
+```python
+from hueval.tokenizers.hubert import load_tokenizer
+
+tokenizer = load_tokenizer("uncased")  # or "cased"
+tokenizer('Az alma leesett a fáról, egyenesen Péter fejére.')
+```
+The above example returns a wrapped tokenizer where ONLY the `__call__` method was wrapped, in order to call `.lower()` on
+every input text. You can obtain the normal `BertTokenizer` by calling `load_tokenizer("uncased", return_wrapped=False)`.
+However, you have to manually ensure that the input text is lower cased.
+
+
 
 # Dataset Usage
 
