@@ -29,6 +29,8 @@ class HuBertUncasedTokenizer(BertTokenizer):
         return super(HuBertUncasedTokenizer, self).__call__(*new_args, **kwargs)
 
 
+# "model_type": "bert"
+
 def load_tokenizer(model_type: _TYPES, return_wrapped: bool = True) -> BertTokenizer:
     path = download_and_extract(model_type)
     prefix = "hubert_wiki" if model_type == "cased" else "hubert_wiki_lower"

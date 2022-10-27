@@ -56,12 +56,22 @@ def extract(path: str):
         destination = path.rstrip(".tar.gz")
         if not os.path.exists(destination):
             f.extractall(destination)
-        return destination
+    return destination
 
 
 def download_and_extract(model_type: _TYPES):
     path = download_model(model_type)
     path = extract(path)
+
+    # appending model_type to config
+    # the lack of this argument affects the behaviour of tokenizer
+    prefix = "hubert_wiki" if model_type == "cased" else "hubert_wiki_lower"
+    with open(os.path.join(path, prefix, "config.json"), mode="r") as f:
+        config = json.load(f)
+    if "model_type" not in config:
+        config["model_type"] = "bert"
+        with open(os.path.join(path, prefix, "config.json"), mode="w") as f:
+            json.dump(config, f)
     return path
 
 
