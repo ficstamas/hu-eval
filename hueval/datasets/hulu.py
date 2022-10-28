@@ -137,13 +137,16 @@ class Hulu(GeneratorBasedBuilder):
         if self.config.name == "rc":
             features = {
                 "query": Value("string"),
-                "lead": Sequence(Value("string")),
+                "lead": Value("string"),
                 "passage": Sequence(Value("string"))
             }
         else:
             features = {text_feature: Value("string") for text_feature in self.config.text_features.keys()}
         if self.config.label_classes:
             if self.config.name == "rc":
+                features["passage_id"] = Value("int32")
+                features["start"] = Value("int32")
+                features["end"] = Value("int32")
                 features["label"] = Value("string")
             else:
                 features["label"] = ClassLabel(names=self.config.label_classes)
@@ -228,8 +231,21 @@ class Hulu(GeneratorBasedBuilder):
 
         for i, row in enumerate(content):
             label = row['MASK'] if 'MASK' in row else -1
-            yield i, {'idx': int(row['id']), 'lead': row['lead'], 'passage': row['passage'],
-                      'query': row['query'], 'label': label}
+            lead = row['lead'][0]
+            passage = row['passage']
+            query = row['query']
+            passage_id, start, end = -1, -1, -1
+            if split_key != "test":
+                for j, p in enumerate(passage):
+                    start = p.find(label)
+                    if start != -1:
+                        passage_id = j
+                        end = start + len(label)
+                        break
+                else:
+                    continue
+            yield i, {'idx': int(row['id']), 'lead': lead, 'passage': passage, 'query': query, 'label': label,
+                      'passage_id': passage_id, "start": start, "end": end}
 
     @staticmethod
     def _sst(base_path, name, split_key):
