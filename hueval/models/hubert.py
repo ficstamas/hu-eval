@@ -93,18 +93,21 @@ def convert_model(model_type: _TYPES):
     return torch_model_path, config_path
 
 
-def load_hubert(model_type: _TYPES, model_class: _MODELS) -> _RETURN_MODELS:
+def load_hubert(model_type: _TYPES, model_class: _MODELS, config: dict) -> _RETURN_MODELS:
     """
     Loads Hubert wiki weights into the provided model which is equivalent to a 'SZTAKI-HLT/hubert-base-cc' in terms of
     parameters
     :param model_type: cased, uncased
     :param model_class: Class of the model (like `transformer.BertForSequenceClassification`) NOT the initialized object
+    :param config: Further parameters for the model like num_labels. Same as transformers.BertConfig
     :return: desired model with the appropriate weights
     """
     path, cfg = convert_model(model_type)
     with open(cfg, mode='r') as f:
-        config = json.load(f)
-    model = model_class(BertConfig(**config))
+        config_ = json.load(f)
+    for key, value in config.items():
+        config_[key] = value
+    model = model_class(BertConfig(**config_))
     model.load_state_dict(torch.load(path), strict=False)
     return model
 
