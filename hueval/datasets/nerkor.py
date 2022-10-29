@@ -106,7 +106,7 @@ class NerKor(GeneratorBasedBuilder):
             "ner": _NER,
             "file_name": Value("string"),
             "sentence_id": Value("int32"),
-            "morp_tagged": Value("bool_"),
+            "morph_tagged": Value("bool_"),
         }
         return DatasetInfo(
             description=self.config.description,
@@ -167,7 +167,7 @@ class NerKor(GeneratorBasedBuilder):
                     "ner": ner,
                     "file_name": "/".join(p),
                     "sentence_id": sentence_id,
-                    "morp_tagged": p[1] == 'morph'
+                    "morph_tagged": p[1] == 'morph'
                 }
                 tokens, lemmas, upos, xpos, feats, ner = [], [], [], [], [], []
                 sentence_id += 1

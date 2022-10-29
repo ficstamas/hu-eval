@@ -60,7 +60,7 @@ class OpinHuBank(GeneratorBasedBuilder):
         features["annotators"] = Sequence(l_)
         features["start"] = Value("int32")
         features["len"] = Value("int32")
-        features["label"] = l_
+        features["labels"] = l_
         features["idx"] = Value("int32")
         return DatasetInfo(
             description=self.config.description,
@@ -119,7 +119,7 @@ class OpinHuBank(GeneratorBasedBuilder):
                     "sentence": line[4],
                     "url": line[5],
                     "annotators": labels,
-                    "label": majority_label
+                    "labels": majority_label
                 })
         train, test = train_test_split(data, train_size=0.8, random_state=0)
         train, validation = train_test_split(train, train_size=int(len(data)*0.7), random_state=0)

@@ -1,6 +1,6 @@
 from dataclasses import dataclass
 from transformers import PreTrainedModel, PreTrainedTokenizerBase, DataCollator
-from typing import Optional
+from typing import Optional, Callable
 from datasets import DatasetDict
 from evaluate import EvaluationModule
 
@@ -13,3 +13,4 @@ class RunParameters:
     tokenized_dataset: Optional[DatasetDict] = None
     metric: Optional[EvaluationModule] = None
     data_collator: Optional[DataCollator] = None
+    compute_metrics: Optional[Callable] = None

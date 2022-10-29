@@ -116,7 +116,7 @@ class Hulu(GeneratorBasedBuilder):
                            "choice2": "choice2",
                            "question": "question"},
             label_classes=["choice1", "choice2"],
-            label_column="label",
+            label_column="labels",
             data_url=_SOURCES["ws"],
             data_dir="hulu/ws",
             url=get_repo_url(_SOURCES["ws"])
@@ -145,13 +145,13 @@ class Hulu(GeneratorBasedBuilder):
         if self.config.label_classes:
             if self.config.name == "rc":
                 features["passage_id"] = Value("int32")
-                features["start"] = Value("int32")
-                features["end"] = Value("int32")
-                features["label"] = Value("string")
+                features["start_positions"] = Value("int32")
+                features["end_positions"] = Value("int32")
+                features["labels"] = Value("string")
             else:
-                features["label"] = ClassLabel(names=self.config.label_classes)
+                features["labels"] = ClassLabel(names=self.config.label_classes)
         else:
-            features["label"] = Value("float32")
+            features["labels"] = Value("float32")
         features["idx"] = Value("int32")
         return DatasetInfo(
             description=self.config.description,
@@ -222,7 +222,7 @@ class Hulu(GeneratorBasedBuilder):
         for i, row in enumerate(content):
             label = 0 if row['Answer1'] == row['CorrectAnswer'] else 1
             yield i, {'idx': int(row['ID']), 'question': row['Question'], 'sentence': row['Sent'],
-                      'choice1': row['Answer1'], 'choice2': row['Answer2'], 'label': label}
+                      'choice1': row['Answer1'], 'choice2': row['Answer2'], 'labels': label}
 
     @staticmethod
     def _rc(base_path, name, split_key):
@@ -244,8 +244,8 @@ class Hulu(GeneratorBasedBuilder):
                         break
                 else:
                     continue
-            yield i, {'idx': int(row['id']), 'lead': lead, 'passage': passage, 'query': query, 'label': label,
-                      'passage_id': passage_id, "start": start, "end": end}
+            yield i, {'idx': int(row['id']), 'lead': lead, 'passage': passage, 'query': query, 'labels': label,
+                      'passage_id': passage_id, "start_positions": start, "end_positions": end}
 
     @staticmethod
     def _sst(base_path, name, split_key):
@@ -260,7 +260,7 @@ class Hulu(GeneratorBasedBuilder):
                 label = 1
             else:
                 label = 2
-            yield i, {'idx': int(row['Sent_id'].split("_")[-1]), 'sentence': row['Sent'], 'label': label}
+            yield i, {'idx': int(row['Sent_id'].split("_")[-1]), 'sentence': row['Sent'], 'labels': label}
 
     @staticmethod
     def _wnli(base_path, name, split_key):
@@ -272,7 +272,7 @@ class Hulu(GeneratorBasedBuilder):
         for i, row in enumerate(content):
             label = int(row['label']) if 'label' in row else -1
             yield i, {'idx': int(row['id']), 'sentence1': row['sentence1'],
-                      'sentence2': row['sentence2'], 'label': label}
+                      'sentence2': row['sentence2'], 'labels': label}
 
     @staticmethod
     def _copa(base_path, name, split_key):
@@ -282,7 +282,7 @@ class Hulu(GeneratorBasedBuilder):
         for i, row in enumerate(content):
             label = int(row['label'])-1 if 'label' in row else -1
             yield i, {'idx': int(row['idx']), 'question': row['question'], 'premise': row['premise'],
-                      'choice1': row['choice1'], 'choice2': row['choice2'], 'label': label}
+                      'choice1': row['choice1'], 'choice2': row['choice2'], 'labels': label}
 
     @staticmethod
     def _cola(base_path, name, split_key):
@@ -291,4 +291,4 @@ class Hulu(GeneratorBasedBuilder):
 
         for i, row in enumerate(content):
             label = int(row['Label']) if 'Label' in row else -1
-            yield i, {'idx': int(row['Sent_id'].split("_")[-1]), 'sentence': row['Sent'], 'label': label}
+            yield i, {'idx': int(row['Sent_id'].split("_")[-1]), 'sentence': row['Sent'], 'labels': label}

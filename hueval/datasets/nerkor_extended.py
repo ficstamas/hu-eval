@@ -41,7 +41,7 @@ class NerKorExtended(GeneratorBasedBuilder):
             "ner": Sequence(_ONPP_NER),
             "file_name": Value("string"),
             "sentence_id": Value("int32"),
-            "morp_tagged": Value("bool_"),
+            "morph_tagged": Value("bool_"),
         }
         return DatasetInfo(
             description=self.config.description,
@@ -95,7 +95,7 @@ class NerKorExtended(GeneratorBasedBuilder):
                     "ner": ner,
                     "file_name": p,
                     "sentence_id": sentence_id,
-                    "morp_tagged": not ('no-morph' in p)
+                    "morph_tagged": not ('no-morph' in p)
                 }
                 tokens, ner = [], []
                 sentence_id += 1
