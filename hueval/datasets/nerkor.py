@@ -12,7 +12,7 @@ _PATHS = {
     "test": "data/train-devel-test/test/",
 }
 
-_SUBS = ["fiction", "legal", "news", "web", "wikipedia"]
+_SUBS = ["fiction", "legal", "news", "web", "wikipedia", "all"]
 
 
 _NER = Sequence(
@@ -133,8 +133,13 @@ class NerKor(GeneratorBasedBuilder):
         ]
 
     def _generate_examples(self, data_file, split_key, **kwargs):
-        base_path = os.path.join(data_file, os.listdir(data_file)[0], _PATHS[split_key], self.config.name)
-        train_pointers = [os.path.join(base_path, x) for x in os.listdir(base_path)]
+        if self.config.name == "all":
+            base_path = os.path.join(data_file, os.listdir(data_file)[0], _PATHS[split_key])
+            base_path = [os.path.join(base_path, p) for p in os.listdir(base_path)]
+            train_pointers = [os.path.join(b, p) for b in base_path for p in os.listdir(b)]
+        else:
+            base_path = os.path.join(data_file, os.listdir(data_file)[0], _PATHS[split_key], self.config.name)
+            train_pointers = [os.path.join(base_path, x) for x in os.listdir(base_path)]
         n = 0
         for annotation in train_pointers:
             for file in os.listdir(annotation):

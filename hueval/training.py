@@ -1,5 +1,5 @@
 from transformers import Trainer, TrainingArguments, IntervalStrategy, DataCollatorForTokenClassification, \
-    DataCollatorWithPadding
+    DataCollatorWithPadding, set_seed
 from hueval.datasets import load_dataset, TaskType
 from hueval.transformers.token_classification import create_model as token_classification_model
 from hueval.transformers.sequence_classification import create_model as sequence_classification_model
@@ -19,13 +19,15 @@ _PREDEFINED_TRAINING_ARGUMENTS = {
     "num_train_epochs": 3,
     "evaluation_strategy": IntervalStrategy.EPOCH,
     "save_strategy": IntervalStrategy.NO,
-    "data_seed": 0
+    "data_seed": 0,
+    "logging_strategy": IntervalStrategy.EPOCH
 }
 
 
 class Training:
     def __init__(self, model_name: str, task_name: str, task_configuration: str, label_name: str,
                  max_seq_length: int = 256, seed: int = 0, **training_arguments):
+        set_seed(seed)
         dataset = load_dataset(task_name, task_configuration)
         if dataset.type == TaskType.TOKEN_CLASSIFICATION:
             params = token_classification_model(model_name, label_name, dataset)
@@ -53,6 +55,7 @@ class Training:
         else:
             raise NotImplementedError
 
+        params.task_type = dataset.type
         params.tokenized_dataset = params.dataset.map(aligner.preprocess_function, batched=True, batch_size=8)
         self.params = params
         training_arguments['seed'] = seed
@@ -81,5 +84,9 @@ class Training:
     def compute_metrics_(self, predictions):
         preds = np.argmax(predictions.predictions, axis=-1)
         labels = predictions.label_ids
+        if self.params.task_type == TaskType.TOKEN_CLASSIFICATION:
+            id2label = self.params.dataset['train'].features[self.label_name].feature.names
+            preds = [[id2label[id_] for j, id_ in enumerate(row) if labels[i][j] != -100] for i, row in enumerate(preds)]
+            labels = [[id2label[id_] for id_ in row if id_ != -100] for row in labels]
         results = self.params.metric.compute(predictions=preds, references=labels)
         return results

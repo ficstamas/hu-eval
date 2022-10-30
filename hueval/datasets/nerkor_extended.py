@@ -7,13 +7,13 @@ from .nerkor import NerKorConfig, get_repo_url
 
 _CITATION = """"""
 _SOURCE = "https://github.com/novakat/NYTK-NerKor-Cars-OntoNotesPP/archive/eb94fc3c22ed27589593716e150d73e060e2333d.zip"
-_SUBS = ["fiction", "legal", "news", "web", "wikipedia"]
+_SUBS = ["fiction", "legal", "news", "web", "wikipedia", "cars", "all"]
 
 
 # Missing tags from readme
 _ONPP_TAGS = ["PER", "FAC", "ORG", "GPE", "LOC", "PROD", "EVENT", "WORK_OF_ART", "LAW", "NORP", "LANGUAGE", "DATE",
               "TIME", "PERCENT", "MONEY", "QUANTITY", "ORDINAL", "CARDINAL", "AWARD", "CAR", "MEDIA", "SMEDIA",
-              "ORG-GPE", "PROJ", "MISC", "MISC-ORG", "MISC-PER", "MISC-LOC", "DUR", "ID", "AGE"]
+              "ORG-GPE", "PROJ", "MISC", "MISC-ORG", "MISC-PER", "MISC-LOC", "DUR", "ID", "AGE", "BUS", "MOTOR", "PRIZE"]
 _ONPP_NER = ClassLabel(
     names=["O"] + [f"{pre}-{tag}" for tag in _ONPP_TAGS for pre in ['B', 'I']]
 )
@@ -71,7 +71,7 @@ class NerKorExtended(GeneratorBasedBuilder):
         base_path = os.path.join(data_file, os.listdir(data_file)[0], "data")
         n = 0
         split = split_key if split_key != "validation" else "devel"
-        files = [x for x in os.listdir(base_path) if split in x and self.config.name in x]
+        files = [x for x in os.listdir(base_path) if split in x and (self.config.name in x or self.config.name == "all")]
         for file in files:
             for data in self._process_files(os.path.join(base_path, file), n):
                 yield data

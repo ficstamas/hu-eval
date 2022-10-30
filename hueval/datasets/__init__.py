@@ -3,6 +3,7 @@ from collections import namedtuple
 from evaluate import load
 from typing import List
 from .nerkor import _SUBS as NERKOR_SUBS
+from .nerkor_extended import _SUBS as NERKOR_EXTENDED_SUBS
 from .nerkor import NerKor
 from .nerkor_extended import NerKorExtended
 from .opinhubank import OpinHuBank
@@ -30,7 +31,7 @@ _metric = {
         "ws": ["super_glue", "wsc"],
     },
     "nytk-nerkor": {x: ["seqeval"] for x in NERKOR_SUBS},
-    "nerkor_1.41e": {x: ["seqeval"] for x in NERKOR_SUBS},
+    "nerkor_1.41e": {x: ["seqeval"] for x in NERKOR_EXTENDED_SUBS},
     "opinhubank": {
         "opinhubank": ["accuracy"]
     },

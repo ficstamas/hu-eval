@@ -25,11 +25,14 @@ all_tasks = [
     ('nytk-nerkor', 'web', 'ner'),
     ('nytk-nerkor', 'wikipedia', 'upos'),
     ('nytk-nerkor', 'wikipedia', 'ner'),
+    ('nytk-nerkor', 'all', 'ner'),
     ('nerkor_1.41e', 'fiction', 'ner'),
     ('nerkor_1.41e', 'legal', 'ner'),
     ('nerkor_1.41e', 'news', 'ner'),
     ('nerkor_1.41e', 'web', 'ner'),
     ('nerkor_1.41e', 'wikipedia', 'ner'),
+    ('nerkor_1.41e', 'cars', 'ner'),
+    ('nerkor_1.41e', 'all', 'ner'),
     ('opinhubank', 'opinhubank', 'labels')
 ]
 
