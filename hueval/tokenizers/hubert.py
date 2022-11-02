@@ -1,9 +1,9 @@
 from hueval.models.hubert import _TYPES, download_and_extract
-from transformers import BertTokenizer
+from transformers import BertTokenizerFast
 import os
 
 
-class HuBertUncasedTokenizer(BertTokenizer):
+class HuBertUncasedTokenizer(BertTokenizerFast):
     text_arguments = ['text', 'text_pair', 'text_target', 'text_pair_target']
 
     def __call__(self, *args, **kwargs):
@@ -31,7 +31,7 @@ class HuBertUncasedTokenizer(BertTokenizer):
 
 # "model_type": "bert"
 
-def load_tokenizer(model_type: _TYPES, return_wrapped: bool = True) -> BertTokenizer:
+def load_tokenizer(model_type: _TYPES, return_wrapped: bool = True) -> BertTokenizerFast:
     path = download_and_extract(model_type)
     prefix = "hubert_wiki" if model_type == "cased" else "hubert_wiki_lower"
     path = os.path.join(path, prefix)
@@ -39,8 +39,8 @@ def load_tokenizer(model_type: _TYPES, return_wrapped: bool = True) -> BertToken
         if return_wrapped:
             tokenizer = HuBertUncasedTokenizer.from_pretrained(path, do_lower_case=False)
         else:
-            tokenizer = BertTokenizer.from_pretrained(path, do_lower_case=False)
+            tokenizer = BertTokenizerFast.from_pretrained(path, do_lower_case=False)
     else:
-        tokenizer = BertTokenizer.from_pretrained(path)
+        tokenizer = BertTokenizerFast.from_pretrained(path)
 
     return tokenizer

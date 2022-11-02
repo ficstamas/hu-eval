@@ -20,7 +20,7 @@ _PREDEFINED_TRAINING_ARGUMENTS = {
     "evaluation_strategy": IntervalStrategy.EPOCH,
     "save_strategy": IntervalStrategy.NO,
     "data_seed": 0,
-    "logging_strategy": IntervalStrategy.EPOCH
+    "logging_strategy": IntervalStrategy.EPOCH,
 }
 
 

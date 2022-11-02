@@ -1,0 +1,29 @@
+{
+    "os": "Windows-10-10.0.19041-SP0",
+    "python": "3.10.6",
+    "heartbeatAt": "2022-11-02T14:13:47.886797",
+    "startedAt": "2022-11-02T14:13:44.995475",
+    "docker": null,
+    "gpu": "NVIDIA GeForce GTX 1050 Ti",
+    "gpu_count": 1,
+    "cpu_count": 6,
+    "cuda": null,
+    "args": [
+        "--seed",
+        "0",
+        "--experiment_id",
+        "159"
+    ],
+    "state": "running",
+    "program": "E:/Research/datasets/hu-eval/test.py",
+    "codePath": "test.py",
+    "git": {
+        "remote": "https://github.com/ficstamas/hu-eval.git",
+        "commit": "286c8f08d90462bab378e5c0d5c8533813b2c2da"
+    },
+    "email": "ficstamas@gmail.com",
+    "root": "E:/Research/datasets/hu-eval",
+    "host": "DESKTOP-4QR57LN",
+    "username": "ftkni",
+    "executable": "E:\\Programs\\Anaconda3\\envs\\hu-eval\\python.exe"
+}
