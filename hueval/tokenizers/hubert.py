@@ -32,6 +32,13 @@ class HuBertUncasedTokenizer(BertTokenizerFast):
 # "model_type": "bert"
 
 def load_tokenizer(model_type: _TYPES, return_wrapped: bool = True) -> BertTokenizerFast:
+    """
+    Loads the tokenizer for HuBert wiki
+    :param model_type: cased or uncased, depends on the model type
+    :param return_wrapped: if True returns a tokenizer which calls lower on the input string for the uncased version,
+    otherwise returns a regular FastTokenizer
+    :return:
+    """
     path = download_and_extract(model_type)
     prefix = "hubert_wiki" if model_type == "cased" else "hubert_wiki_lower"
     path = os.path.join(path, prefix)

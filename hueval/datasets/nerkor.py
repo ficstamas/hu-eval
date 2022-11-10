@@ -4,7 +4,25 @@ import os
 import textwrap
 
 
-_CITATION = """"""
+_CITATION = """
+@inproceedings{DBLP:conf/tsd/SimonV21,
+  author    = {Eszter Simon and
+               No{\'{e}}mi Vad{\'{a}}sz},
+  editor    = {Kamil Ekstein and
+               Frantisek P{\'{a}}rtl and
+               Miloslav Konop{\'{\i}}k},
+  title     = {Introducing {NYTK-NerKor}, A Gold Standard {Hungarian} Named Entity
+               Annotated Corpus},
+  booktitle = {Text, Speech, and Dialogue - 24th International Conference, {TSD}
+               2021, Olomouc, Czech Republic, September 6-9, 2021, Proceedings},
+  series    = {Lecture Notes in Computer Science},
+  volume    = {12848},
+  pages     = {222--234},
+  publisher = {Springer},
+  year      = {2021},
+  doi       = {10.1007/978-3-030-83527-9\_19},
+}
+"""
 _SOURCE = "https://github.com/nytud/NYTK-NerKor/archive/36a9aefd37e1a77fb8671375def0a5ad343d5dc3.zip"
 _PATHS = {
     "train": "data/train-devel-test/train/",

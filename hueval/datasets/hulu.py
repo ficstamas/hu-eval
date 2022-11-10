@@ -6,7 +6,18 @@ import textwrap
 from sklearn.model_selection import train_test_split
 
 
-_CITATION = """"""
+_CITATION = """
+@inproceedings{ligetinagy2022hulu,
+  title={HuLU: magyar nyelvű benchmark adatbázis kiépítése a neurális nyelvmodellek kiértékelése céljából},
+  author={Ligeti-Nagy, N. and Ferenczi, G. and Héja, E. and Jelencsik-Mátyus, K. and Laki, L. J. and Vadász, N. and Yang, Z. Gy. and Váradi, T.},
+  booktitle={XVIII. Magyar Számítógépes Nyelvészeti Konferencia},
+  year={2022},
+  pages = {431--446},
+  editors = {Berend, G. and Gosztolya, G. and Vincze, V.},
+  address = {Szeged},
+  publisher = {Szegedi Tudományegyetem, Informatikai Intézet}
+}
+"""
 
 
 _SOURCES = {

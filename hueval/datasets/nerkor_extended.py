@@ -5,7 +5,15 @@ import textwrap
 from .nerkor import NerKorConfig, get_repo_url
 
 
-_CITATION = """"""
+_CITATION = """
+@inproceedings{NerKorCarsONPP,
+  author    = {Nov{\'a}k Attila and
+               Nov{\'a}k Borb{\'a}la,
+  title     = {{NerKor} 1.41e},
+  booktitle = {XVIII. Magyar Számítógépes Nyelvészeti Konferencia},
+  year      = {2022},
+}
+"""
 _SOURCE = "https://github.com/novakat/NYTK-NerKor-Cars-OntoNotesPP/archive/eb94fc3c22ed27589593716e150d73e060e2333d.zip"
 _SUBS = ["fiction", "legal", "news", "web", "wikipedia", "cars", "all"]
 

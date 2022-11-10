@@ -1,5 +1,9 @@
 # Hungarian Evaluation library for NLP
 
+# Requirements
+
+- Python >= 3.9
+- PyTorch
 
 # Installation
 
@@ -13,7 +17,23 @@ Specified version:
 pip install git+https://github.com/ficstamas/hu-eval.git@v0.1.0
 ```
 
-# Hubert Wiki
+# API
+
+```python
+# Load HuBert wiki as a transformer model
+from hueval.models.hubert import load_hubert
+# Load Tokenizer for HuBert wiki
+from hueval.tokenizers.hubert import load_tokenizer
+# Load hungarian datasets as a Huggingface Dataset
+# You can see the supported datasets further below
+from hueval.datasets import load_dataset
+# DataCollator for Multiple Choice Question Answering
+from hueval.utils.data_collator import DataCollatorForMultipleChoice
+```
+
+# Examples
+
+## Load HuBert Wiki model and tokenizer
 
 Loading the model:
 ```python
@@ -36,7 +56,7 @@ However, you have to manually ensure that the input text is lower cased.
 
 
 
-# Dataset Usage
+## Dataset Usage
 
 ```python
 from hueval.datasets import load_dataset
@@ -62,9 +82,9 @@ rc_dataset = load_dataset("hulu", "rc")
 
 # Supported Datasets
 
-| Names        | Available Configurations             | Sources                                                         |
-|--------------|--------------------------------------|-----------------------------------------------------------------|
-| hulu         | cola, copa, sst2, rc, wnli, ws       | [link](https://github.com/nytud/HuLU)                           |
-| nytk-nerkor  | fiction, legal, news, web, wikipedia | [link](https://github.com/nytud/NYTK-NerKor)                    |
-| nerkor_1.41e | fiction, legal, news, web, wikipedia | [link](https://github.com/novakat/NYTK-NerKor-Cars-OntoNotesPP) | 
-| opinhubank   | opinhubank                           | [link](https://sites.google.com/site/mmihaltz/resources)        | 
+| Names        | Available Configurations                   | Sources                                                         |
+|--------------|--------------------------------------------|-----------------------------------------------------------------|
+| hulu         | cola, copa, sst2, rc, wnli, ws             | [link](https://github.com/nytud/HuLU)                           |
+| nytk-nerkor  | fiction, legal, news, web, wikipedia       | [link](https://github.com/nytud/NYTK-NerKor)                    |
+| nerkor_1.41e | cars, fiction, legal, news, web, wikipedia | [link](https://github.com/novakat/NYTK-NerKor-Cars-OntoNotesPP) | 
+| opinhubank   | opinhubank                                 | [link](https://sites.google.com/site/mmihaltz/resources)        | 
